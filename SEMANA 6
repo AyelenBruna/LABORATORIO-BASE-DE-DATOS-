@@ -48,3 +48,24 @@ FROM cliente c
 JOIN comprobante co 
 ON c.id_cliente = co.id_cliente;
 
+SELECT nombre
+FROM cliente
+WHERE id_cliente IN (
+    SELECT id_cliente FROM comprobante
+);
+
+SELECT nombre
+FROM cliente c
+WHERE EXISTS (
+    SELECT 1 
+    FROM comprobante co 
+    WHERE co.id_cliente = c.id_cliente
+);
+
+SELECT nombre
+FROM cliente c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM comprobante co 
+    WHERE co.id_cliente = c.id_cliente
+);
