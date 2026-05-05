@@ -1,0 +1,50 @@
+# LABORATORIO-BASE-DE-DATOS-
+CREATE DATABASE ALQUILER
+USE ALQUILER
+
+CREATE TABLE cliente (
+    id_cliente CHAR(5) PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    dni INT UNIQUE NOT NULL
+);
+
+CREATE TABLE carro (
+    id_auto CHAR(5) PRIMARY KEY,
+    marca VARCHAR(50) NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
+    anio INT NOT NULL
+);
+
+CREATE TABLE comprobante (
+    id_comprobante CHAR(5) PRIMARY KEY,
+    id_cliente CHAR(5) NOT NULL,
+    id_auto CHAR(5) NOT NULL,
+    fecha DATE NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
+    FOREIGN KEY (id_auto) REFERENCES carro(id_auto)
+);
+
+INSERT INTO cliente VALUES 
+('C001','Ayelen','Herrera',12345678),
+('C002','Erick','Sanchez',87654321);
+
+INSERT INTO carro VALUES
+('A001','Toyota',15000.00,2020),
+('A002','Kia',12000.00,2019),
+('A003','Hyundai',13000.00,2021);
+
+INSERT INTO comprobante VALUES
+('V001','C001','A001','2024-01-10'),
+('V002','C002','A002','2024-02-15');
+
+SELECT co.id_comprobante, ca.marca
+FROM comprobante co
+JOIN carro ca 
+ON co.id_auto = ca.id_auto;
+
+SELECT c.nombre, co.fecha
+FROM cliente c
+JOIN comprobante co 
+ON c.id_cliente = co.id_cliente;
+
